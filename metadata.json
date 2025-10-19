@@ -1,0 +1,5 @@
+{
+  "name": "Copy of ChemBase: Chemical Product Database",
+  "description": "An intelligent database for managing chemical products, leveraging Gemini to automatically generate safety information and product descriptions.",
+  "requestFramePermissions": []
+}
