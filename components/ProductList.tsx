@@ -7,14 +7,19 @@ interface ProductListProps {
   onEdit: (product: Product) => void;
   onDelete: (id: string) => void;
   onView: (product: Product) => void;
+  searchQuery: string;
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products, onEdit, onDelete, onView }) => {
+const ProductList: React.FC<ProductListProps> = ({ products, onEdit, onDelete, onView, searchQuery }) => {
   if (products.length === 0) {
     return (
       <div className="text-center py-20">
-        <h2 className="text-2xl font-semibold text-gray-400">No Products Found</h2>
-        <p className="text-gray-500 mt-2">Click "Add Product" to get started.</p>
+        <h2 className="text-2xl font-semibold text-gray-400">
+          {searchQuery ? 'No Products Match Your Search' : 'No Products Found'}
+        </h2>
+        <p className="text-gray-500 mt-2">
+          {searchQuery ? 'Try using a different search term.' : 'Click "Add Product" to get started.'}
+        </p>
       </div>
     );
   }

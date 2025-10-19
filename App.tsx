@@ -8,6 +8,7 @@ import * as productService from './services/productService';
 
 const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [viewingProduct, setViewingProduct] = useState<Product | null>(null);
@@ -52,12 +53,26 @@ const App: React.FC = () => {
     closeModal();
   }, [closeModal]);
 
+  const filteredProducts = products.filter(product => {
+    const query = searchQuery.toLowerCase();
+    return (
+      product.name.toLowerCase().includes(query) ||
+      product.formula.toLowerCase().includes(query) ||
+      product.casNumber.toLowerCase().includes(query)
+    );
+  });
+
   return (
     <div className="min-h-screen bg-brand-background">
-      <Header onAddProduct={handleAddProduct} />
+      <Header 
+        onAddProduct={handleAddProduct}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+      />
       <main className="container mx-auto p-4 md:p-8">
         <ProductList 
-          products={products} 
+          products={filteredProducts}
+          searchQuery={searchQuery}
           onEdit={handleEditProduct} 
           onDelete={handleDeleteProduct}
           onView={handleViewProduct}
